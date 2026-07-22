@@ -1,58 +1,89 @@
-import { Layer, Source } from "react-map-gl/maplibre";
+import { Button } from "antd";
+import { useEffect, useMemo, useState } from "react";
+import { Marker, useMap } from "react-map-gl/maplibre";
+import Supercluster from "supercluster";
+const radiusPixels = 35;
+const zoomLevel = 5;
+export const ClusterComponent = ({ features }) => {
+  const { current: mapref } = useMap();
 
-export const ClusterComponent = ({ geoJSON }) => {
-  const clusterLayer = {
-    id: "clusters",
-    type: "circle",
-    filter: ["has", "point_count"],
-    paint: {
-      "circle-color": [
-        "step",
-        ["get", "point_count"],
-        "#51bbd6",
-        100,
-        "#f1f075",
-        750,
-        "#f28cb1",
-      ],
-      "circle-radius": ["step", ["get", "point_count"], 20, 100, 30, 750, 40],
-    },
-  };
+  const [zoom, setZoom] = useState(2);
+  const [bbox, setBbox] = useState([]);
 
-  const clusterCountLayer = {
-    id: "cluster-count",
-    type: "symbol",
-    filter: ["has", "point_count"],
-    layout: {
-      "text-field": "{point_count_abbreviated}",
-      "text-size": 12,
-    },
-  };
+  useEffect(() => {
+    if (!mapref) return;
 
-  const unclusteredPointLayer = {
-    id: "unclustered-point",
-    type: "circle",
-    filter: ["!", ["has", "point_count"]],
-    paint: {
-      "circle-color": "#11b4da",
-      "circle-radius": 4,
-      "circle-stroke-width": 1,
-      "circle-stroke-color": "#fff",
-    },
-  };
+    const updateMapData = () => {
+      const bounds = mapref.getBounds();
+
+      setZoom(mapref.getZoom());
+
+      setBbox([
+        bounds.getWest(),
+        bounds.getSouth(),
+        bounds.getEast(),
+        bounds.getNorth(),
+      ]);
+    };
+
+    mapref.on("move", updateMapData);
+
+    return () => {
+      mapref.off("move", updateMapData);
+    };
+  }, [mapref]);
+
+  const index = useMemo(() => {
+    const cluster = new Supercluster({
+      radius: radiusPixels,
+      maxZoom: zoomLevel,
+    });
+
+    cluster.load(features ?? []);
+
+    return cluster;
+  }, [features]);
+
+  const clusters = useMemo(() => {
+    return index.getClusters(bbox, Math.floor(zoom));
+  }, [index, bbox, zoom]);
 
   return (
-    <Source
-      id="cluster"
-      type="geojson"
-      data={geoJSON}
-      cluster={true}
-      clusterMaxZoom={14}
-      clusterRadius={50}
-    >
-      <Layer id="clusters" {...clusterLayer}></Layer>
-      <Layer {...clusterCountLayer}></Layer>
-      <Layer {...unclusteredPointLayer}></Layer>
-    </Source>
+    <>
+      {clusters.map((cluster) => {
+        const [lng, lat] = cluster.geometry.coordinates;
+
+        const isCluster = cluster.properties?.cluster;
+        return (
+          <Marker
+            onClick={(e) => {
+              e.originalEvent.stopPropagation();
+              e.originalEvent.preventDefault();
+              if (isCluster) {
+                const zoom = index.getClusterExpansionZoom(cluster.id);
+                mapref.flyTo({ center: [lng, lat], zoom, duration: 1000 });
+              } else {
+                mapref.flyTo({ center: [lng, lat], zoom: 10 });
+              }
+            }}
+            key={
+              isCluster
+                ? cluster.properties?.cluster_id
+                : cluster.properties?.id
+            }
+            longitude={lng}
+            latitude={lat}
+          >
+            {isCluster ? (
+              <Button type="primary">
+                {cluster.properties.point_count_abbreviated}
+              </Button>
+            ) : (
+              <Button>📍</Button>
+            )}
+          </Marker>
+        );
+      })}
+    </>
   );
 };

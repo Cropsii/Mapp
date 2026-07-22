@@ -7,14 +7,11 @@ import {
 import { FloatButton } from "antd";
 import FloatButtonGroup from "antd/es/float-button/FloatButtonGroup";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { useRef } from "react";
-import {
-  FullscreenControl,
-  Map,
-  MapProvider,
-  Marker,
-} from "react-map-gl/maplibre";
+import { useMemo, useRef, useState } from "react";
+import { Map, MapProvider } from "react-map-gl/maplibre";
 import { useAuth } from "./hooks/useAuth";
+import { ClusterComponent } from "./components/ClusterComponent";
+
 function App() {
   const { logOut } = useAuth();
   const mapRef = useRef(null);
@@ -23,35 +20,50 @@ function App() {
     styles: "https://maps.geoapify.com/v1/styles/osm-liberty/style.json?",
     apiKey: `apiKey=${import.meta.env.VITE_APP_MAP_API}`,
   };
+  const [data, setData] = useState([]);
 
+  const geoJSON = useMemo(() => {
+    const geoJSON = {
+      type: "FeatureCollection",
+      features: data.map((item) => ({
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [item.lng, item.lat],
+        },
+      })),
+    };
+
+    return geoJSON;
+  }, [data]);
+
+  const handleClusterClick = async (e) => {
+    const feature = e.features?.[0];
+
+    if (!feature) return;
+
+    const clusterId = feature.properties.cluster_id;
+    const source = mapRef.current.getSource("cluster");
+    const zoom = await source.getClusterExpansionZoom(clusterId);
+    mapRef.current.flyTo({
+      center: feature.geometry.coordinates,
+      zoom,
+      // duration: 500,
+    });
+  };
   return (
     <MapProvider>
       <Map
-        onClick={(e) => console.log(e)}
-        onLoad={() => {
-          const map = mapRef.current?.getMap();
-          map?.setProjection({
-            type: "globe",
-          });
-        }}
+        onDblClick={(e) => setData((prev) => [...prev, e.lngLat])}
+        onClick={handleClusterClick}
+        interactiveLayerIds={["clusters"]}
+        projection={"globe"}
         ref={mapRef}
         style={{ height: "100dvh" }}
         mapStyle={`${mapAtributes.styles}${mapAtributes.apiKey}`}
       >
-        <Marker
-          opacityWhenCovered={0.1}
-          longitude={-100}
-          latitude={40}
-          anchor="bottom"
-          onClick={(e) =>
-            e.target._map.easeTo({
-              center: e.target.getLngLat(),
-              pitch: 0,
-              zoom: 4,
-              duration: 2000,
-            })
-          }
-        ></Marker>
+        <ClusterComponent geoJSON={geoJSON}></ClusterComponent>
+
         <FloatButtonGroup
           trigger="click"
           icon={<SettingOutlined></SettingOutlined>}
@@ -70,14 +82,12 @@ function App() {
           <FloatButton
             icon={<ReloadOutlined></ReloadOutlined>}
             onClick={() =>
-              console.log(
-                mapRef.current?.flyTo({
-                  center: [37.62, 55.75],
-                  pitch: 0,
-                  bearing: 0,
-                  zoom: 5,
-                }),
-              )
+              mapRef.current?.flyTo({
+                center: [37.62, 55.75],
+                pitch: 0,
+                bearing: 0,
+                zoom: 5,
+              })
             }
           ></FloatButton>
           <FloatButton
@@ -85,7 +95,6 @@ function App() {
             onClick={logOut}
           ></FloatButton>
         </FloatButtonGroup>
-        <FullscreenControl />
       </Map>
     </MapProvider>
   );

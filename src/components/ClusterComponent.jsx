@@ -52,8 +52,8 @@ export const ClusterComponent = ({ features }) => {
     <>
       {clusters.map((cluster) => {
         const [lng, lat] = cluster.geometry.coordinates;
-
         const isCluster = cluster.properties?.cluster;
+        
         return (
           <Marker
             onClick={(e) => {
@@ -79,7 +79,7 @@ export const ClusterComponent = ({ features }) => {
                 {cluster.properties.point_count_abbreviated}
               </Button>
             ) : (
-              <Button>📍</Button>
+              <Button>{cluster.properties.title}</Button>
             )}
           </Marker>
         );

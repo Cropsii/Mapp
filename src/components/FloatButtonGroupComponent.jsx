@@ -1,4 +1,5 @@
 import {
+  AimOutlined,
   LogoutOutlined,
   ReloadOutlined,
   SettingOutlined,
@@ -12,8 +13,10 @@ import { useAuth } from "../hooks/useAuth";
 export const FloatButtonGroupComponent = () => {
   const { logOut } = useAuth();
   const { current: mapRef } = useMap();
+
   return (
     <FloatButtonGroup
+      shape="square"
       trigger="click"
       icon={<SettingOutlined></SettingOutlined>}
     >
@@ -31,6 +34,10 @@ export const FloatButtonGroupComponent = () => {
       <Popconfirm title="Выйти из аккаунта" onConfirm={logOut} cancelText="нет">
         <FloatButton icon={<LogoutOutlined></LogoutOutlined>}></FloatButton>
       </Popconfirm>
+      <FloatButton
+        tooltip={{ placement: "left", title: "Добавить заметку " }}
+        icon={<AimOutlined></AimOutlined>}
+      ></FloatButton>
     </FloatButtonGroup>
   );
 };

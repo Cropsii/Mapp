@@ -4,16 +4,20 @@ export function useGeoJSON(data) {
   const geoJSON = useMemo(() => {
     const res = {
       type: "FeatureCollection",
-      features: data?.map((item) => ({
-        type: "Feature",
-        properties: {
-          id: crypto.randomUUID(),
-        },
-        geometry: {
-          type: "Point",
-          coordinates: [item.lng, item.lat],
-        },
-      })),
+      features: data?.map((item) => {
+        const geo = item?.geoPoint;
+        return {
+          type: "Feature",
+          properties: {
+            id: item.id,
+            title: item.title,
+          },
+          geometry: {
+            type: "Point",
+            coordinates: [geo.lon, geo.lat],
+          },
+        };
+      }),
     };
     return res;
   }, [data]);

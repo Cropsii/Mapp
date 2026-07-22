@@ -6,16 +6,20 @@ import { App, ConfigProvider } from "antd";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { StrictMode } from "react";
 import "./index.css";
+import { ModalProvider } from "./context/providers/ModalProvider.jsx";
 
 const queryClient = new QueryClient();
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App>
-      <ConfigProvider>
-        <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router}></RouterProvider>
-        </QueryClientProvider>
-      </ConfigProvider>
-    </App>
+    <ConfigProvider>
+      <App>
+        <ModalProvider>
+          <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router}></RouterProvider>
+          </QueryClientProvider>
+        </ModalProvider>
+      </App>
+    </ConfigProvider>
   </StrictMode>,
 );

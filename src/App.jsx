@@ -1,41 +1,36 @@
 import "maplibre-gl/dist/maplibre-gl.css";
-import { useRef, useState } from "react";
-import { Map, MapProvider } from "react-map-gl/maplibre";
+import { useRef } from "react";
+import { MapProvider } from "react-map-gl/maplibre";
 import { ClusterComponent } from "./components/ClusterComponent";
 import { FloatButtonGroupComponent } from "./components/FloatButtonGroupComponent";
 import { useGeoJSON } from "./hooks/useGeoJSON";
+import { MapMain } from "./components/MapMain";
+import { ModalAddNote } from "./components/modal/ModalAddNote";
+import { useCollection } from "./hooks/useCollectionManipulation";
+import { Spin } from "antd";
 
 function App() {
   const mapRef = useRef(null);
 
-  const mapAtributes = {
-    styles: "https://maps.geoapify.com/v1/styles/osm-liberty/style.json?",
-    apiKey: `apiKey=${import.meta.env.VITE_APP_MAP_API}`,
-  };
+  const { collection, collectionData } = useCollection("notes");
+  const { geoJSON } = useGeoJSON(collection);
 
-  const [data, setData] = useState([]);
-  
-  const { geoJSON } = useGeoJSON(data);
+  if (collection) {
+    console.log(collection);
+  }
+
   return (
     <MapProvider>
-      <Map
-        maxZoom={10}
-        minZoom={0}
-        doubleClickZoom={false}
-        onDblClick={(e) => {
-          setData((prev) => [...prev, e.lngLat]);
-        }}
-        interactiveLayerIds={["clusters"]}
-        projection={"globe"}
-        ref={mapRef}
-        style={{ height: "100dvh" }}
-        mapStyle={`${mapAtributes.styles}${mapAtributes.apiKey}`}
-      >
-        {geoJSON && (
-          <ClusterComponent features={geoJSON.features}></ClusterComponent>
-        )}
-        <FloatButtonGroupComponent></FloatButtonGroupComponent>
-      </Map>
+      <ModalAddNote></ModalAddNote>
+      <Spin spinning={collectionData?.isLoading} delay={10}>
+        <MapMain mapRef={mapRef}>
+          {geoJSON && (
+            <ClusterComponent features={geoJSON.features}></ClusterComponent>
+          )}
+
+          <FloatButtonGroupComponent></FloatButtonGroupComponent>
+        </MapMain>
+      </Spin>
     </MapProvider>
   );
 }

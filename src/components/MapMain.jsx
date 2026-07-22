@@ -1,0 +1,39 @@
+import React, { useState } from "react";
+import Map from "react-map-gl/maplibre";
+import { PopConfirmAddNode } from "./PopConfirmAddNode";
+
+export const MapMain = ({ children, mapRef }) => {
+  const mapAtributes = {
+    styles: "https://maps.geoapify.com/v1/styles/osm-liberty/style.json?",
+    apiKey: `apiKey=${import.meta.env.VITE_APP_MAP_API}`,
+  };
+  const [cord, setCord] = useState();
+  const [isPopOpen, setIsPopOpen] = useState(false);
+
+  return (
+    <Map
+      maxZoom={20}
+      minZoom={0}
+      doubleClickZoom={false}
+      onDblClick={(e) => {
+        const eventCord = e.lngLat;
+        console.log(eventCord.toArray());
+        setIsPopOpen(true);
+        setCord(eventCord);
+      }}
+      interactiveLayerIds={["clusters"]}
+      projection={"globe"}
+      ref={mapRef}
+      style={{ height: "100dvh" }}
+      mapStyle={`${mapAtributes.styles}${mapAtributes.apiKey}`}
+    >
+      <PopConfirmAddNode
+        isPopOpen={isPopOpen}
+        setIsPopOpen={setIsPopOpen}
+        cord={cord}
+      ></PopConfirmAddNode>
+
+      {children}
+    </Map>
+  );
+};

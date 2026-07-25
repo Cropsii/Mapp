@@ -11,6 +11,7 @@ export function useCollection(collectionName) {
 
       return record;
     },
+   
   });
   return { collection, collectionData };
 }

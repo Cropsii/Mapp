@@ -1,15 +1,16 @@
 import { Button, Flex, Form, Input, Modal, Statistic, Upload } from "antd";
-import React, { useContext } from "react";
-import { ModalContext } from "../../context/ModalContext";
-import FormItem from "antd/es/form/FormItem";
-import { UploadOutlined } from "@ant-design/icons";
 import { useMutateCollection } from "../../hooks/useMutateCollection";
+import { ModalContext } from "../../context/ModalContext";
+import { UploadOutlined } from "@ant-design/icons";
+import FormItem from "antd/es/form/FormItem";
+import React, { useContext } from "react";
 import { pb } from "../../utils/PB";
 
 export const ModalAddNote = () => {
   const { isAddModalOpen, setIsAddModalOpen } = useContext(ModalContext);
   const { addToCollection, addToCollectionData } = useMutateCollection();
   const { cord } = useContext(ModalContext);
+  
   console.log(cord);
 
   const [form] = Form.useForm();

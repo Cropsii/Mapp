@@ -1,37 +1,20 @@
-import { Button } from "antd";
-import { useEffect, useMemo, useState } from "react";
 import { Marker, useMap } from "react-map-gl/maplibre";
+import { useMapView } from "../hooks/useMapView";
+import { useGeoJSON } from "../hooks/useGeoJSON";
+import { ClusterPoint } from "./ClusterPoint";
+import { useMemo } from "react";
 import Supercluster from "supercluster";
+
 const radiusPixels = 35;
 const zoomLevel = 5;
-export const ClusterComponent = ({ features }) => {
+
+export const ClusterComponent = ({ data, setPopUpData }) => {
   const { current: mapref } = useMap();
 
-  const [zoom, setZoom] = useState(2);
-  const [bbox, setBbox] = useState([]);
-
-  useEffect(() => {
-    if (!mapref) return;
-
-    const updateMapData = () => {
-      const bounds = mapref.getBounds();
-
-      setZoom(mapref.getZoom());
-
-      setBbox([
-        bounds.getWest(),
-        bounds.getSouth(),
-        bounds.getEast(),
-        bounds.getNorth(),
-      ]);
-    };
-
-    mapref.on("move", updateMapData);
-
-    return () => {
-      mapref.off("move", updateMapData);
-    };
-  }, [mapref]);
+  const { zoom, bbox } = useMapView(mapref);
+  const { geoJSON } = useGeoJSON(data);
+  // console.log("geoJSON");
+  const features = geoJSON.features;
 
   const index = useMemo(() => {
     const cluster = new Supercluster({
@@ -40,7 +23,6 @@ export const ClusterComponent = ({ features }) => {
     });
 
     cluster.load(features ?? []);
-
     return cluster;
   }, [features]);
 
@@ -48,24 +30,33 @@ export const ClusterComponent = ({ features }) => {
     return index.getClusters(bbox, Math.floor(zoom));
   }, [index, bbox, zoom]);
 
+  const handleClick = (e, lng, lat, cluster, isCluster) => {
+    e.originalEvent.stopPropagation();
+    e.originalEvent.preventDefault();
+    if (!isCluster) {
+      const popUpData = data.find((item) => item.id == cluster.properties?.id);
+      setPopUpData({ lng: lng, lat: lat, popUpData: popUpData });
+    }
+
+    const zoomToExpandCluster = index.getClusterExpansionZoom(cluster?.id);
+
+    mapref.flyTo({
+      center: [lng, lat],
+      zoom: zoomToExpandCluster || 10,
+      duration: 1000,
+    });
+  };
+
   return (
     <>
       {clusters.map((cluster) => {
         const [lng, lat] = cluster.geometry.coordinates;
         const isCluster = cluster.properties?.cluster;
-        
+
         return (
           <Marker
-            onClick={(e) => {
-              e.originalEvent.stopPropagation();
-              e.originalEvent.preventDefault();
-              if (isCluster) {
-                const zoom = index.getClusterExpansionZoom(cluster.id);
-                mapref.flyTo({ center: [lng, lat], zoom, duration: 1000 });
-              } else {
-                mapref.flyTo({ center: [lng, lat], zoom: 10 });
-              }
-            }}
+            clickTolerance={100}
+            onClick={(e) => handleClick(e, lng, lat, cluster, isCluster)}
             key={
               isCluster
                 ? cluster.properties?.cluster_id
@@ -74,13 +65,10 @@ export const ClusterComponent = ({ features }) => {
             longitude={lng}
             latitude={lat}
           >
-            {isCluster ? (
-              <Button type="primary">
-                {cluster.properties.point_count_abbreviated}
-              </Button>
-            ) : (
-              <Button>{cluster.properties.title}</Button>
-            )}
+            <ClusterPoint
+              isCluster={isCluster}
+              clusterData={cluster}
+            ></ClusterPoint>
           </Marker>
         );
       })}

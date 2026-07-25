@@ -1,14 +1,14 @@
+import FloatButtonGroup from "antd/es/float-button/FloatButtonGroup";
+import { useMap } from "react-map-gl/maplibre";
+import { FloatButton, Popconfirm } from "antd";
+import { useAuth } from "../hooks/useAuth";
 import {
   AimOutlined,
   LogoutOutlined,
   ReloadOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-import { FloatButton, Popconfirm } from "antd";
-import FloatButtonGroup from "antd/es/float-button/FloatButtonGroup";
 import React from "react";
-import { useMap } from "react-map-gl/maplibre";
-import { useAuth } from "../hooks/useAuth";
 
 export const FloatButtonGroupComponent = () => {
   const { logOut } = useAuth();

@@ -14,11 +14,11 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ConfigProvider>
       <App>
-        <ModalProvider>
-          <QueryClientProvider client={queryClient}>
+        <QueryClientProvider client={queryClient}>
+          <ModalProvider>
             <RouterProvider router={router}></RouterProvider>
-          </QueryClientProvider>
-        </ModalProvider>
+          </ModalProvider>
+        </QueryClientProvider>
       </App>
     </ConfigProvider>
   </StrictMode>,

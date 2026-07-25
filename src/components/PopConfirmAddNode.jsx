@@ -1,10 +1,11 @@
-import { Popconfirm } from "antd";
+import { QuestionCircleOutlined } from "@ant-design/icons";
+import { ModalContext } from "../context/ModalContext";
 import { Marker } from "react-map-gl/maplibre";
 import { useContext } from "react";
-import { ModalContext } from "../context/ModalContext";
-import { QuestionCircleOutlined } from "@ant-design/icons";
+import { Popconfirm } from "antd";
 
 export const PopConfirmAddNode = ({ isPopOpen, cord, setIsPopOpen }) => {
+  
   const { setIsAddModalOpen, setCord } = useContext(ModalContext);
 
   if (!cord) {

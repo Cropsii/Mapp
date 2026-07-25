@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import Map from "react-map-gl/maplibre";
 import { PopConfirmAddNode } from "./PopConfirmAddNode";
+import Map from "react-map-gl/maplibre";
+import React, { useState } from "react";
 
 export const MapMain = ({ children, mapRef }) => {
   const mapAtributes = {
@@ -12,12 +12,12 @@ export const MapMain = ({ children, mapRef }) => {
 
   return (
     <Map
+
       maxZoom={20}
-      minZoom={0}
+      minZoom={1}
       doubleClickZoom={false}
       onDblClick={(e) => {
         const eventCord = e.lngLat;
-        console.log(eventCord.toArray());
         setIsPopOpen(true);
         setCord(eventCord);
       }}

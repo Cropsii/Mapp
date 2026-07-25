@@ -10,8 +10,6 @@ export const ModalAddNote = () => {
   const { isAddModalOpen, setIsAddModalOpen } = useContext(ModalContext);
   const { addToCollection, addToCollectionData } = useMutateCollection();
   const { cord } = useContext(ModalContext);
-  
-  console.log(cord);
 
   const [form] = Form.useForm();
   const finish = async (values) => {

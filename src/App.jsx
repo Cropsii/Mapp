@@ -18,7 +18,6 @@ function App() {
     lat: null,
     popUpData: null,
   });
-  console.log(collection);
 
   return (
     <MapProvider>

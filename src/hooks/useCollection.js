@@ -7,11 +7,9 @@ export function useCollection(collectionName) {
     queryKey: ["collection", collectionName],
     queryFn: async () => {
       const record = await pb.collection(collectionName).getFullList();
-      console.log(record);
 
       return record;
     },
-   
   });
   return { collection, collectionData };
 }

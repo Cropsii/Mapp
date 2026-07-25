@@ -13,7 +13,7 @@ export const ClusterComponent = ({ data, setPopUpData }) => {
 
   const { zoom, bbox } = useMapView(mapref);
   const { geoJSON } = useGeoJSON(data);
-  // console.log("geoJSON");
+
   const features = geoJSON.features;
 
   const index = useMemo(() => {

@@ -12,7 +12,6 @@ export const MapMain = ({ children, mapRef }) => {
 
   return (
     <Map
-
       maxZoom={20}
       minZoom={1}
       doubleClickZoom={false}

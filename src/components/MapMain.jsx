@@ -1,4 +1,5 @@
 import { PopConfirmAddNode } from "./PopConfirmAddNode";
+import { GlobeControl } from "maplibre-gl";
 import Map from "react-map-gl/maplibre";
 import React, { useState } from "react";
 
@@ -14,6 +15,12 @@ export const MapMain = ({ children, mapRef }) => {
     <Map
       maxZoom={20}
       minZoom={1}
+      onLoad={() => {
+        // const map = mapRef.current.getMap();
+        // map.setPaintProperty("water", "fill-color", "#5982da");
+        mapRef.current.addControl(new GlobeControl(), "top-right");
+        mapRef.current.setPaintProperty("water", "fill-color", "#5982da");
+      }}
       doubleClickZoom={false}
       onDblClick={(e) => {
         const eventCord = e.lngLat;
@@ -30,7 +37,6 @@ export const MapMain = ({ children, mapRef }) => {
         setIsPopOpen={setIsPopOpen}
         cord={cord}
       ></PopConfirmAddNode>
-
       {children}
     </Map>
   );

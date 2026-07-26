@@ -3,7 +3,6 @@ import { useMap } from "react-map-gl/maplibre";
 import { FloatButton, Popconfirm } from "antd";
 import { useAuth } from "../hooks/useAuth";
 import {
-  AimOutlined,
   LogoutOutlined,
   ReloadOutlined,
   SettingOutlined,
@@ -25,19 +24,17 @@ export const FloatButtonGroupComponent = () => {
         onClick={() =>
           mapRef.flyTo({
             center: [37.62, 55.75],
+            padding: { top: 0, left: 0, right: 0, bottom: 0 },
             pitch: 0,
             bearing: 0,
-            zoom: 5,
+            zoom: 2,
+            duration: 500,
           })
         }
       ></FloatButton>
       <Popconfirm title="Выйти из аккаунта" onConfirm={logOut} cancelText="нет">
         <FloatButton icon={<LogoutOutlined></LogoutOutlined>}></FloatButton>
       </Popconfirm>
-      <FloatButton
-        tooltip={{ placement: "left", title: "Добавить заметку " }}
-        icon={<AimOutlined></AimOutlined>}
-      ></FloatButton>
     </FloatButtonGroup>
   );
 };

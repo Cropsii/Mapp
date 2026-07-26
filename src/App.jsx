@@ -10,7 +10,6 @@ import { useRef, useState } from "react";
 import { Spin } from "antd";
 
 function App() {
-
   const mapRef = useRef(null);
 
   const { collection, collectionData } = useCollection("notes");

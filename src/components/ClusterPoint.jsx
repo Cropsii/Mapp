@@ -2,7 +2,6 @@ import { Badge, Button } from "antd";
 import React from "react";
 
 export const ClusterPoint = ({ isCluster, clusterData }) => {
-
   if (isCluster) {
     return (
       <Button type="primary" shape="circle">

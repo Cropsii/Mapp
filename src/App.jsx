@@ -10,6 +10,7 @@ import { useRef, useState } from "react";
 import { Spin } from "antd";
 
 function App() {
+
   const mapRef = useRef(null);
 
   const { collection, collectionData } = useCollection("notes");
@@ -28,7 +29,7 @@ function App() {
             data={popUpData?.popUpData}
             lat={popUpData?.lat}
             lng={popUpData?.lng}
-            onClose={() => setPopUpData(null)}
+            setPopUpData={setPopUpData}
           ></PopUpInfo>
           <ClusterComponent
             data={collection}

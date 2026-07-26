@@ -7,6 +7,7 @@ import { App, ConfigProvider } from "antd";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { StrictMode } from "react";
 import "./index.css";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,10 @@ createRoot(document.getElementById("root")).render(
       <App>
         <QueryClientProvider client={queryClient}>
           <ModalProvider>
+            <ReactQueryDevtools
+              initialIsOpen={false}
+              buttonPosition="bottom-left"
+            ></ReactQueryDevtools>
             <RouterProvider router={router}></RouterProvider>
           </ModalProvider>
         </QueryClientProvider>

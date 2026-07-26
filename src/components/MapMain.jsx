@@ -20,7 +20,6 @@ export const MapMain = ({ children, mapRef }) => {
         setIsPopOpen(true);
         setCord(eventCord);
       }}
-      interactiveLayerIds={["clusters"]}
       projection={"globe"}
       ref={mapRef}
       style={{ height: "100dvh" }}

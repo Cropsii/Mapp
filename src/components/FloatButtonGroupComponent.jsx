@@ -4,15 +4,29 @@ import { FloatButton, Popconfirm } from "antd";
 import { useAuth } from "../hooks/useAuth";
 import {
   LogoutOutlined,
+  MoonOutlined,
   ReloadOutlined,
   SettingOutlined,
+  SunOutlined,
 } from "@ant-design/icons";
-import React from "react";
+import React, { useContext } from "react";
+import { ThemeContext } from "../context/ThemeContext";
 
 export const FloatButtonGroupComponent = () => {
   const { logOut } = useAuth();
+  const { Toggle } = useContext(ThemeContext);
   const { current: mapRef } = useMap();
-
+  const switchIcons = () => {
+    const localTheme = localStorage.getItem("theme");
+    switch (localTheme) {
+      case "light":
+        return <SunOutlined></SunOutlined>;
+      case "dark":
+        return <MoonOutlined></MoonOutlined>;
+      default:
+        return <p>auto</p>;
+    }
+  };
   return (
     <FloatButtonGroup
       shape="square"
@@ -35,6 +49,13 @@ export const FloatButtonGroupComponent = () => {
       <Popconfirm title="Выйти из аккаунта" onConfirm={logOut} cancelText="нет">
         <FloatButton icon={<LogoutOutlined></LogoutOutlined>}></FloatButton>
       </Popconfirm>
+      <FloatButton
+        tooltip={{ placement: "left", title: "Извенить тему" }}
+        onClick={() => {
+          Toggle();
+        }}
+        icon={switchIcons()}
+      ></FloatButton>
     </FloatButtonGroup>
   );
 };

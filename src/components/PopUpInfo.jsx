@@ -20,6 +20,7 @@ export const PopUpInfo = ({
   }
   return (
     <Popup
+      style={{ color: "red" }}
       latitude={lat}
       longitude={lng}
       {...props}

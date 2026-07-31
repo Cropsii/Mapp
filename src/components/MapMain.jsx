@@ -1,25 +1,27 @@
 import { PopConfirmAddNode } from "./PopConfirmAddNode";
-import { GlobeControl } from "maplibre-gl";
+import { ModalContext } from "../context/ModalContext";
+import { mapAtributes } from "../utils/mapAtributes";
+import { ModalAddNote } from "./modal/ModalAddNote";
+import React, { useContext, useState } from "react";
 import Map from "react-map-gl/maplibre";
-import React, { useState } from "react";
 
 export const MapMain = ({ children, mapRef }) => {
-  const mapAtributes = {
-    styles: "https://maps.geoapify.com/v1/styles/osm-liberty/style.json?",
-    apiKey: `apiKey=${import.meta.env.VITE_APP_MAP_API}`,
-  };
-  const [cord, setCord] = useState();
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isPopOpen, setIsPopOpen] = useState(false);
+  const { cord, setCord } = useContext(ModalContext);
 
   return (
     <Map
+      id="mainMap"
+      maxPitch={80}
+      reuseMaps
+      onClick={(e) => setCord(e?.lngLat)}
+      zoomSnap={1}
       maxZoom={20}
       minZoom={1}
       onLoad={() => {
-        // const map = mapRef.current.getMap();
-        // map.setPaintProperty("water", "fill-color", "#5982da");
-        mapRef.current.addControl(new GlobeControl(), "top-right");
-        mapRef.current.setPaintProperty("water", "fill-color", "#5982da");
+        const map = mapRef.current.getMap();
+        console.log(map);
       }}
       doubleClickZoom={false}
       onDblClick={(e) => {
@@ -30,10 +32,17 @@ export const MapMain = ({ children, mapRef }) => {
       projection={"globe"}
       ref={mapRef}
       style={{ height: "100dvh" }}
-      mapStyle={`${mapAtributes.styles}${mapAtributes.apiKey}`}
+      mapStyle={`${mapAtributes.mapTiler.satellite}${mapAtributes.mapTiler.apiKey}`}
     >
+      <ModalAddNote
+        isAddModalOpen={isAddModalOpen}
+        cord={cord}
+        setIsAddModalOpen={setIsAddModalOpen}
+      ></ModalAddNote>
       <PopConfirmAddNode
         isPopOpen={isPopOpen}
+        setCord={setCord}
+        setIsAddModalOpen={setIsAddModalOpen}
         setIsPopOpen={setIsPopOpen}
         cord={cord}
       ></PopConfirmAddNode>

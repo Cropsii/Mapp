@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 export function useMapView(mapref) {
   const [zoom, setZoom] = useState(2);
   const [bbox, setBbox] = useState([]);
-
   useEffect(() => {
     if (!mapref) return;
 
@@ -21,7 +20,6 @@ export function useMapView(mapref) {
     };
     updateMapData();
     mapref.on("move", updateMapData);
-
     return () => {
       mapref.off("move", updateMapData);
     };

@@ -1,15 +1,12 @@
 import { Button, Flex, Form, Input, Modal, Statistic, Upload } from "antd";
 import { useMutateCollection } from "../../hooks/useMutateCollection";
-import { ModalContext } from "../../context/ModalContext";
 import { UploadOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
-import React, { useContext } from "react";
 import { pb } from "../../utils/PB";
+import React from "react";
 
-export const ModalAddNote = () => {
-  const { isAddModalOpen, setIsAddModalOpen } = useContext(ModalContext);
+export const ModalAddNote = ({ isAddModalOpen, setIsAddModalOpen, cord }) => {
   const { addToCollection, addToCollectionData } = useMutateCollection();
-  const { cord } = useContext(ModalContext);
 
   const [form] = Form.useForm();
   const finish = async (values) => {
@@ -17,8 +14,8 @@ export const ModalAddNote = () => {
       ...values,
       relation: pb.authStore.record.id,
       geoPoint: {
-        lon: cord.lng,
-        lat: cord.lat,
+        lon: cord?.lng,
+        lat: cord?.lat,
       },
     };
     console.log(data);
@@ -53,9 +50,8 @@ export const ModalAddNote = () => {
         ]}
       >
         <Flex justify="space-around">
-          <Statistic title="Широта" value={cord.lat} precision={3} />
-
-          <Statistic title="Долгота" value={cord.lng} precision={3} />
+          <Statistic title="Долгота" value={cord?.lng} precision={3} />
+          <Statistic title="Широта" value={cord?.lat} precision={3} />
         </Flex>
         <FormItem name={"title"} label={"Название"}>
           <Input></Input>

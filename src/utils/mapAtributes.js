@@ -10,3 +10,26 @@ export const mapAtributes = {
     apiKey: `key=${import.meta.env.VITE_APP_MAPTILER_API}`,
   },
 };
+
+export const mapStyles = [
+  {
+    name: "Светлая 3д карта",
+    img: "public/lightPreviewMap.png",
+    style: `${mapAtributes.geApify.light}${mapAtributes.geApify.apiKey}`,
+  },
+  {
+    name: "Спутниковые снимки",
+    img: "public/satellitePreviewMap.png",
+    style: `${mapAtributes.mapTiler.satellite}${mapAtributes.mapTiler.apiKey}`,
+  },
+  {
+    name: "Спутник пустой",
+    img: "public/satelliteBlankPreviewMap.png",
+    style: `${mapAtributes.mapTiler.satelliteBlank}${mapAtributes.mapTiler.apiKey}`,
+  },
+  {
+    name: "Темная тема",
+    img: "public/darkPreviewMap.png",
+    style: `${mapAtributes.geApify.dark}${mapAtributes.geApify.apiKey}`,
+  },
+];

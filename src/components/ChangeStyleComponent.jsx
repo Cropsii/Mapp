@@ -1,53 +1,49 @@
-import { Card, Image, Space } from "antd";
-import React from "react";
+import { BorderBeam, Card, Image, Space } from "antd";
+import React, { useState } from "react";
 import { useMap } from "react-map-gl/maplibre";
-import { mapAtributes } from "../utils/mapAtributes";
-
+import { mapStyles } from "../utils/mapAtributes";
 export const ChangeStyleComponent = () => {
-  const prewImgArr = [
-    {
-      name: "Светлая 3д карта",
-      img: "public/lightPreviewMap.png",
-      style: `${mapAtributes.geApify.light}${mapAtributes.geApify.apiKey}`,
-    },
-    {
-      name: "Спутниковые снимки",
-      img: "public/satellitePreviewMap.png",
-      style: `${mapAtributes.mapTiler.satellite}${mapAtributes.mapTiler.apiKey}`,
-    },
-    {
-      name: "Спутник пустой",
-      img: "public/satelliteBlankPreviewMap.png",
-      style: `${mapAtributes.mapTiler.satelliteBlank}${mapAtributes.mapTiler.apiKey}`,
-    },
-    {
-      name: "Темная тема",
-      img: "public/darkPreviewMap.png",
-      style: `${mapAtributes.geApify.dark}${mapAtributes.geApify.apiKey}`,
-    },
-  ];
+  const [selectedIndex, setSelectedIndex] = useState(() => {
+    const selectedStyleIndex = localStorage.getItem("selectedIndex");
+    if (selectedStyleIndex) {
+      return selectedStyleIndex;
+    }
+    return 0;
+  });
+
   const { mainMap: mapRef } = useMap("mainMap");
+
+  const handleClick = (item, index) => {
+    const map = mapRef.getMap();
+    map.setStyle(item?.style);
+    localStorage.setItem("selectedIndex", index);
+    setSelectedIndex(index);
+  };
 
   return (
     <Space vertical>
-      {prewImgArr.map((item, index) => (
-        <Card
-          unselectable="on"
+      {mapStyles.map((item, index) => (
+        <BorderBeam
           key={index}
-          title={item.name}
-          hoverable
-          onClick={() => {
-            const map = mapRef.getMap();
-            map.setStyle(item?.style);
-          }}
+          style={{ visibility: index == selectedIndex ? "visible" : "hidden" }}
         >
-          <Image
-            preview={false}
-            draggable={false}
+          <Card
+            size="small"
             unselectable="on"
-            src={item.img}
-          ></Image>
-        </Card>
+            title={item.name}
+            hoverable
+            onClick={() => handleClick(item, index)}
+          >
+            <Image
+              aria-placeholder={item?.name}
+              loading="lazy"
+              preview={false}
+              draggable={false}
+              unselectable="on"
+              src={item.img}
+            ></Image>
+          </Card>
+        </BorderBeam>
       ))}
     </Space>
   );

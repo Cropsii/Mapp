@@ -4,7 +4,13 @@ import React from "react";
 export const LayoutSider = ({ children }) => {
   const { Sider } = Layout;
   return (
-    <Sider theme="light" width={300} collapsible collapsedWidth={0}>
+    <Sider
+      defaultCollapsed
+      theme="light"
+      width={300}
+      collapsible
+      collapsedWidth={0}
+    >
       <Space
         vertical
         style={{

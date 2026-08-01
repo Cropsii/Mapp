@@ -1,17 +1,24 @@
 import { PopConfirmAddNode } from "./PopConfirmAddNode";
 import { ModalContext } from "../context/ModalContext";
-import { mapAtributes } from "../utils/mapAtributes";
 import { ModalAddNote } from "./modal/ModalAddNote";
 import React, { useContext, useState } from "react";
+import { mapStyles } from "../utils/mapAtributes";
 import Map from "react-map-gl/maplibre";
 
 export const MapMain = ({ children, mapRef }) => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isPopOpen, setIsPopOpen] = useState(false);
   const { cord, setCord } = useContext(ModalContext);
-
   return (
     <Map
+      hash
+      keyboard
+      sky={{
+        "sky-color": "#87CEEB",
+        "atmosphere-blend": 0.1,
+        "fog-ground-blend": 0.02,
+        "sky-horizon-blend": 0.06,
+      }}
       id="mainMap"
       maxPitch={80}
       reuseMaps
@@ -21,6 +28,7 @@ export const MapMain = ({ children, mapRef }) => {
       minZoom={1}
       onLoad={() => {
         const map = mapRef.current.getMap();
+
         console.log(map);
       }}
       doubleClickZoom={false}
@@ -32,7 +40,7 @@ export const MapMain = ({ children, mapRef }) => {
       projection={"globe"}
       ref={mapRef}
       style={{ height: "100dvh" }}
-      mapStyle={`${mapAtributes.mapTiler.satellite}${mapAtributes.mapTiler.apiKey}`}
+      mapStyle={mapStyles[localStorage.getItem("selectedIndex") || 0]?.style}
     >
       <ModalAddNote
         isAddModalOpen={isAddModalOpen}

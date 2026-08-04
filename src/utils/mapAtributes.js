@@ -5,7 +5,8 @@ export const mapAtributes = {
     apiKey: `apiKey=${import.meta.env.VITE_APP_MAP_API}`,
   },
   mapTiler: {
-    satellite: "https://api.maptiler.com/maps/hybrid-v4/style.json?",
+    satellite:
+      "https://api.maptiler.com/maps/019fce77-aa22-7f7d-923a-691e2491e4dd/style.json?",
     satelliteBlank: "https://api.maptiler.com/maps/satellite-v4/style.json?",
     apiKey: `key=${import.meta.env.VITE_APP_MAPTILER_API}`,
   },
@@ -14,22 +15,22 @@ export const mapAtributes = {
 export const mapStyles = [
   {
     name: "Светлая 3д карта",
-    img: "public/lightPreviewMap.png",
+    img: "/lightPreviewMap.png",
     style: `${mapAtributes.geApify.light}${mapAtributes.geApify.apiKey}`,
   },
   {
     name: "Спутниковые снимки",
-    img: "public/satellitePreviewMap.png",
+    img: "/satellitePreviewMap.png",
     style: `${mapAtributes.mapTiler.satellite}${mapAtributes.mapTiler.apiKey}`,
   },
   {
     name: "Спутник пустой",
-    img: "public/satelliteBlankPreviewMap.png",
+    img: "/satelliteBlankPreviewMap.png",
     style: `${mapAtributes.mapTiler.satelliteBlank}${mapAtributes.mapTiler.apiKey}`,
   },
   {
     name: "Темная тема",
-    img: "public/darkPreviewMap.png",
+    img: "/darkPreviewMap.png",
     style: `${mapAtributes.geApify.dark}${mapAtributes.geApify.apiKey}`,
   },
 ];

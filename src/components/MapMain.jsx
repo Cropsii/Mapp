@@ -1,18 +1,24 @@
 import { PopConfirmAddNode } from "./PopConfirmAddNode";
-import { ModalContext } from "../context/ModalContext";
-import { ModalAddNote } from "./modal/ModalAddNote";
-import React, { useContext, useState } from "react";
 import { mapStyles } from "../utils/mapAtributes";
 import Map from "react-map-gl/maplibre";
+import React, { useState } from "react";
 
 export const MapMain = ({ children, mapRef }) => {
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isPopOpen, setIsPopOpen] = useState(false);
-  const { cord, setCord } = useContext(ModalContext);
+  const [cord, setCord] = useState();
+
   return (
     <Map
+      styleDiffing
       hash
       keyboard
+      light={{
+        anchor: "viewport",
+        intensity: 0.5,
+        position: [1.15, 210, 30],
+        color: "#ffffff",
+      }}
+      attributionControl={false}
       sky={{
         "sky-color": "#87CEEB",
         "atmosphere-blend": 0.1,
@@ -20,18 +26,17 @@ export const MapMain = ({ children, mapRef }) => {
         "sky-horizon-blend": 0.06,
       }}
       id="mainMap"
-      maxPitch={80}
+      maxPitch={75}
       reuseMaps
-      onClick={(e) => setCord(e?.lngLat)}
       zoomSnap={1}
       maxZoom={20}
       minZoom={1}
-      onLoad={() => {
-        const map = mapRef.current.getMap();
-
-        console.log(map);
+      onStyleData={(e) => console.log(e)}
+      onLoad={(e) => {
+        const map = e.target;
       }}
       doubleClickZoom={false}
+      onClick={(e) => setCord(e?.lngLat)}
       onDblClick={(e) => {
         const eventCord = e.lngLat;
         setIsPopOpen(true);
@@ -42,15 +47,8 @@ export const MapMain = ({ children, mapRef }) => {
       style={{ height: "100dvh" }}
       mapStyle={mapStyles[localStorage.getItem("selectedIndex") || 0]?.style}
     >
-      <ModalAddNote
-        isAddModalOpen={isAddModalOpen}
-        cord={cord}
-        setIsAddModalOpen={setIsAddModalOpen}
-      ></ModalAddNote>
       <PopConfirmAddNode
         isPopOpen={isPopOpen}
-        setCord={setCord}
-        setIsAddModalOpen={setIsAddModalOpen}
         setIsPopOpen={setIsPopOpen}
         cord={cord}
       ></PopConfirmAddNode>

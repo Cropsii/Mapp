@@ -13,10 +13,19 @@ export const ChangeStyleComponent = () => {
 
   const { mainMap: mapRef } = useMap("mainMap");
 
-  const handleClick = (item, index) => {
+  const handleClick = async (item, index) => {
     const map = mapRef.getMap();
-    map.setStyle(item?.style);
+    await map.setStyle(item?.style, {
+      diff: true,
+      transformStyle: (prev, newstyle) => {
+        console.log(prev);
+        console.log(newstyle);
+        return {...newstyle};
+      },
+    });
+
     localStorage.setItem("selectedIndex", index);
+
     setSelectedIndex(index);
   };
 

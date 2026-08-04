@@ -1,5 +1,4 @@
 import { FloatButtonGroupComponent } from "./components/FloatButtonGroupComponent";
-import { ChangeStyleComponent } from "./components/ChangeStyleComponent";
 import {
   GeolocateControl,
   Layer,
@@ -7,22 +6,21 @@ import {
   Source,
   TerrainControl,
 } from "react-map-gl/maplibre";
+import { ProjectionControl } from "./components/ProjectionControl";
 import { ClusterComponent } from "./components/ClusterComponent";
+import { TabsComponent } from "./components/TabsComponent";
 import { LayoutSider } from "./components/LayoutSider";
 import { useCollection } from "./hooks/useCollection";
-import { mapAtributes, mapStyles } from "./utils/mapAtributes";
+import { mapAtributes } from "./utils/mapAtributes";
 import { PopUpInfo } from "./components/PopUpInfo";
 import LayoutWrap from "./components/LayoutWrap";
 import { MapMain } from "./components/MapMain";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useRef, useState } from "react";
-import { Button, Layout, Spin } from "antd";
-import { ProjectionControl } from "./components/ProjectionControl";
+import { Layout, Spin } from "antd";
 import React from "react";
 
 function App() {
-  console.log(mapStyles[localStorage.getItem("selectedIndex") || 0].style);
-
   const mapRef = useRef(null);
 
   const { collection, collectionData } = useCollection("notes");
@@ -36,11 +34,22 @@ function App() {
   return (
     <LayoutWrap>
       <LayoutSider>
-        <ChangeStyleComponent></ChangeStyleComponent>
+        <TabsComponent></TabsComponent>
       </LayoutSider>
       <Layout.Content>
         <Spin spinning={collectionData?.isLoading} delay={10}>
           <MapMain mapRef={mapRef}>
+            <Source
+              id="test"
+              type="vector"
+              // tileSize={100}
+              volatile
+              url={
+                "https://maps.geoapify.com/v1/styles/osm-bright-grey/style.json?&apiKey=cbeab0ff06444627ba38713bded866e1"
+              }
+            >
+              {/* <Layer type="fill" source="test"></Layer> */}
+            </Source>
             <Source
               id="terrain"
               type="raster-dem"
@@ -52,8 +61,7 @@ function App() {
                 id="hailside"
                 source="terrain"
                 paint={{
-                  "hillshade-method": "igor",
-                  "hillshade-exaggeration": 0.05,
+                  "hillshade-exaggeration": 0.1,
                 }}
                 layout={{ visibility: "none" }}
               ></Layer>
@@ -82,14 +90,6 @@ function App() {
               setPopUpData={setPopUpData}
             ></ClusterComponent>
             <FloatButtonGroupComponent></FloatButtonGroupComponent>
-            <Button
-              onClick={() => {
-                const map = mapRef.current.getMap();
-                map.setLayoutProperty("hailside", "visibility", "visible");
-              }}
-            >
-              Hello
-            </Button>
           </MapMain>
         </Spin>
       </Layout.Content>

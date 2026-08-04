@@ -40,17 +40,6 @@ function App() {
         <Spin spinning={collectionData?.isLoading} delay={10}>
           <MapMain mapRef={mapRef}>
             <Source
-              id="test"
-              type="vector"
-              // tileSize={100}
-              volatile
-              url={
-                "https://maps.geoapify.com/v1/styles/osm-bright-grey/style.json?&apiKey=cbeab0ff06444627ba38713bded866e1"
-              }
-            >
-              {/* <Layer type="fill" source="test"></Layer> */}
-            </Source>
-            <Source
               id="terrain"
               type="raster-dem"
               url={`https://api.maptiler.com/tiles/terrain-rgb-v2/tiles.json?${mapAtributes.mapTiler.apiKey}`}

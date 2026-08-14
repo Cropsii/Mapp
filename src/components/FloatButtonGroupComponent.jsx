@@ -28,7 +28,7 @@ export const FloatButtonGroupComponent = () => {
               padding: { top: 0, left: 0, right: 0, bottom: 0 },
               pitch: 0,
               bearing: 0,
-              zoom: 2,
+              zoom: 1,
               duration: 500,
             })
           }

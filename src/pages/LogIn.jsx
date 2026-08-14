@@ -1,5 +1,5 @@
 import React from "react";
-import LayoutWrap from "../components/LayoutWrap";
+import LayoutWrap from "../components/layout/LayoutWrap";
 import { Button, Flex, Form, Input, Layout } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { useAuth } from "../hooks/useAuth";

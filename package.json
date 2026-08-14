@@ -12,10 +12,12 @@
   },
   "dependencies": {
     "@ant-design/icons": "^6.3.2",
+    "@mercator-blue/sdk": "^0.5.2",
     "@tanstack/react-query": "^5.101.2",
     "@tanstack/react-query-devtools": "^5.101.4",
     "antd": "^6.5.1",
     "maplibre-gl": "^5.24.0",
+    "maplibre-gl-nasa-earthdata": "^0.1.4",
     "pocketbase": "^0.27.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",

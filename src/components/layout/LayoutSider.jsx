@@ -5,21 +5,22 @@ export const LayoutSider = ({ children }) => {
   const { Sider } = Layout;
   return (
     <Sider
+      unselectable="on"
       defaultCollapsed
       theme="light"
-      width={300}
+      width={330}
       collapsible
       collapsedWidth={0}
     >
       <Space
+        unselectable="on"
+        size={"large"}
         vertical
         style={{
-          padding: "16px",
           overflow: "auto",
           maxHeight: "100dvh",
           width: "100%",
         }}
-        gap={"medium"}
       >
         {children}
       </Space>

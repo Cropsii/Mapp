@@ -1,5 +1,5 @@
 import { Button, Flex, Form, Input, Layout } from "antd";
-import LayoutWrap from "../components/LayoutWrap";
+import LayoutWrap from "../components/layout/LayoutWrap";
 import { UserOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 import { useAuth } from "../hooks/useAuth";

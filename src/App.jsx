@@ -1,4 +1,5 @@
 import { FloatButtonGroupComponent } from "./components/FloatButtonGroupComponent";
+import { NasaEarthdataControlReact } from "maplibre-gl-nasa-earthdata/react";
 import {
   GeolocateControl,
   Layer,
@@ -8,23 +9,22 @@ import {
 } from "react-map-gl/maplibre";
 import { ProjectionControl } from "./components/ProjectionControl";
 import { ClusterComponent } from "./components/ClusterComponent";
+import { LayoutSider } from "./components/layout/LayoutSider";
 import { TabsComponent } from "./components/TabsComponent";
-import { LayoutSider } from "./components/LayoutSider";
+import LayoutWrap from "./components/layout/LayoutWrap";
 import { useCollection } from "./hooks/useCollection";
 import { mapAtributes } from "./utils/mapAtributes";
 import { PopUpInfo } from "./components/PopUpInfo";
-import LayoutWrap from "./components/LayoutWrap";
 import { MapMain } from "./components/MapMain";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useRef, useState } from "react";
 import { Layout, Spin } from "antd";
+
 import React from "react";
 
 function App() {
   const mapRef = useRef(null);
-
   const { collection, collectionData } = useCollection("notes");
-
   const [popUpData, setPopUpData] = useState({
     lng: null,
     lat: null,
@@ -32,13 +32,13 @@ function App() {
   });
 
   return (
-    <LayoutWrap>
-      <LayoutSider>
-        <TabsComponent></TabsComponent>
-      </LayoutSider>
-      <Layout.Content>
-        <Spin spinning={collectionData?.isLoading} delay={10}>
-          <MapMain mapRef={mapRef}>
+    <Spin spinning={collectionData?.isLoading} delay={10}>
+      <MapMain mapRef={mapRef}>
+        <LayoutWrap>
+          <LayoutSider>
+            <TabsComponent></TabsComponent>
+          </LayoutSider>
+          <Layout.Content>
             <Source
               id="terrain"
               type="raster-dem"
@@ -50,11 +50,13 @@ function App() {
                 id="hailside"
                 source="terrain"
                 paint={{
-                  "hillshade-exaggeration": 0.1,
+                  "hillshade-illumination-anchor": "map",
+                  "hillshade-exaggeration": 0.15,
                 }}
                 layout={{ visibility: "none" }}
               ></Layer>
             </Source>
+            {/* Слой землятресений */}
             {/* <Layers
               data={[
                 {
@@ -63,7 +65,15 @@ function App() {
                     "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson",
                 },
               ]}
+              
             ></Layers> */}
+            {/* Данные NASA GIBS */}
+            <NasaEarthdataControlReact
+              map={mapRef.current}
+              includeVector={true}
+              position="bottom-left"
+              theme="light"
+            ></NasaEarthdataControlReact>
             <NavigationControl visualizePitch visualizeRoll></NavigationControl>
             <GeolocateControl></GeolocateControl>
             <TerrainControl source="terrain"></TerrainControl>
@@ -79,10 +89,10 @@ function App() {
               setPopUpData={setPopUpData}
             ></ClusterComponent>
             <FloatButtonGroupComponent></FloatButtonGroupComponent>
-          </MapMain>
-        </Spin>
-      </Layout.Content>
-    </LayoutWrap>
+          </Layout.Content>
+        </LayoutWrap>
+      </MapMain>
+    </Spin>
   );
 }
 

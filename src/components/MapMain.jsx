@@ -15,14 +15,14 @@ export const MapMain = ({ children, mapRef }) => {
       light={{
         anchor: "viewport",
         intensity: 0.5,
-        position: [1.15, 210, 30],
+        "position-transition": { duration: 1000 },
         color: "#ffffff",
       }}
       attributionControl={false}
       sky={{
         "sky-color": "#87CEEB",
-        "atmosphere-blend": 0.1,
-        "fog-ground-blend": 0.02,
+        "atmosphere-blend": 0.8,
+        "fog-ground-blend": 0.5,
         "sky-horizon-blend": 0.06,
       }}
       id="mainMap"
@@ -32,9 +32,6 @@ export const MapMain = ({ children, mapRef }) => {
       maxZoom={20}
       minZoom={1}
       onStyleData={(e) => console.log(e)}
-      onLoad={(e) => {
-        const map = e.target;
-      }}
       doubleClickZoom={false}
       onClick={(e) => setCord(e?.lngLat)}
       onDblClick={(e) => {

@@ -4,7 +4,7 @@ import { MapProvider } from "react-map-gl/maplibre";
 import "maplibre-gl-nasa-earthdata/style.css";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router";
-import { router } from "./router/rout.jsx";
+import { router } from "./router/Rout.jsx";
 import { App, ConfigProvider } from "antd";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { StrictMode } from "react";

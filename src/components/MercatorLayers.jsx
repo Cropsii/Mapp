@@ -9,6 +9,7 @@ export const MercatorLayers = () => {
   const [colormap, setColormap] = useState("turbo");
   const [opacity, setOpacity] = useState(1);
   const [particleCount, setParticleCount] = useState(1000);
+  const [pointSize, setPointSize] = useState(3);
   const dataOptions = [
     {
       label: "Пусто",
@@ -122,6 +123,7 @@ export const MercatorLayers = () => {
   return (
     <Card>
       <MercatorLayer
+        pointSize={pointSize}
         smooth={true}
         particleCount={particleCount}
         opacity={opacity}
@@ -169,8 +171,14 @@ export const MercatorLayers = () => {
           <Slider
             max={4000}
             min={200}
-            // value={particleCount}
             onChangeComplete={(e) => setParticleCount(e)}
+          ></Slider>
+        </FormItem>
+        <FormItem label="Размер частицы">
+          <Slider
+            max={10}
+            min={1}
+            onChangeComplete={(e) => setPointSize(e)}
           ></Slider>
         </FormItem>
       </Flex>

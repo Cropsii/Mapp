@@ -17,8 +17,7 @@ export const LightControlCard = () => {
           dots
           min={0}
           max={360}
-          value={lightXYZ[1]}
-          onChange={(e) =>
+          onChangeComplete={(e) =>
             setLightXYZ((prev) => {
               const next = [...prev];
               next[1] = e;
@@ -32,14 +31,22 @@ export const LightControlCard = () => {
           dots
           min={0}
           max={360}
-          value={lightXYZ[2]}
-          onChange={(e) =>
+          onChangeComplete={(e) =>
             setLightXYZ((prev) => {
               const next = [...prev];
               next[2] = e;
               return next;
             })
           }
+        ></Slider>
+      </FormItem>
+      <FormItem label="Яркость">
+        <Slider
+          dots
+          min={0}
+          max={1}
+          step={0.1}
+          onChange={(e) => mapRef.setSky({ "atmosphere-blend": e })}
         ></Slider>
       </FormItem>
     </Card>

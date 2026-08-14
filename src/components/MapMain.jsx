@@ -21,8 +21,8 @@ export const MapMain = ({ children, mapRef }) => {
       attributionControl={false}
       sky={{
         "sky-color": "#87CEEB",
-        "atmosphere-blend": 0.8,
-        "fog-ground-blend": 0.5,
+        "atmosphere-blend": 0.3,
+        "fog-ground-blend": 0.2,
         "sky-horizon-blend": 0.06,
       }}
       id="mainMap"

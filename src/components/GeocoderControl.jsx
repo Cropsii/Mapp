@@ -14,7 +14,6 @@ export const GeocoderControl = () => {
               const params = new URLSearchParams({
                 text: config.query,
                 limit: config.limit ?? 10,
-                filter: "countrycode:ru",
                 format: "geojson",
                 apiKey: import.meta.env.VITE_APP_MAP_API,
               });

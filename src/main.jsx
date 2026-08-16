@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import "@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { MapProvider } from "react-map-gl/maplibre";
 import "maplibre-gl-nasa-earthdata/style.css";
@@ -9,6 +10,8 @@ import { App, ConfigProvider } from "antd";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { StrictMode } from "react";
 import "./index.css";
+
+import "@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css";
 
 const queryClient = new QueryClient();
 

@@ -21,6 +21,7 @@ import { useRef, useState } from "react";
 import { Layout, Spin } from "antd";
 
 import React from "react";
+import { GeocoderControl } from "./components/GeocoderControl";
 
 function App() {
   const mapRef = useRef(null);
@@ -74,6 +75,7 @@ function App() {
               position="bottom-left"
               theme="light"
             ></NasaEarthdataControlReact>
+            <GeocoderControl></GeocoderControl>
             <NavigationControl visualizePitch visualizeRoll></NavigationControl>
             <GeolocateControl></GeolocateControl>
             <TerrainControl source="terrain"></TerrainControl>

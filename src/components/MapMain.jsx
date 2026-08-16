@@ -30,7 +30,7 @@ export const MapMain = ({ children, mapRef }) => {
       reuseMaps
       zoomSnap={1}
       maxZoom={20}
-      minZoom={1}
+      minZoom={0}
       onStyleData={(e) => console.log(e)}
       doubleClickZoom={false}
       onClick={(e) => setCord(e?.lngLat)}

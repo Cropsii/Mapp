@@ -1,7 +1,7 @@
 import MaplibreGeocoder from "@maplibre/maplibre-gl-geocoder";
 import "@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css";
-import useApp from "antd/es/app/useApp";
 import { useControl } from "react-map-gl/maplibre";
+import useApp from "antd/es/app/useApp";
 
 export const GeocoderControl = () => {
   const { message } = useApp();

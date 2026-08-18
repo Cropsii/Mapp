@@ -35,6 +35,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Check environment
+        run: echo "VITE_APP_BD=$VITE_APP_BD"
+        env:
+          VITE_APP_BD: ${{ vars.VITE_APP_BD }}
+
       - name: Build
         run: npm run build
         env:

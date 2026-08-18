@@ -15,7 +15,7 @@ export const GeocoderControl = () => {
                 text: config.query,
                 limit: config.limit ?? 10,
                 format: "geojson",
-                apiKey: import.meta.env.VITE_APP_MAP_API,
+                apiKey: import.meta.env.VITE_APP_MAP_API?.trim(),
               });
 
               const response = await fetch(

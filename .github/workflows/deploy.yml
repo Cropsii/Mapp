@@ -34,6 +34,11 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          VITE_APP_MAP_API: ${{ vars.VITE_APP_MAP_API }}
+          VITE_APP_MAPTILER_API: ${{ vars.VITE_APP_MAPTILER_API }}
+          VITE_APP_MERCATOR: ${{ vars.VITE_APP_MERCATOR }}
+          VITE_APP_BD: ${{ vars.VITE_APP_BD }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

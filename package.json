@@ -13,6 +13,8 @@
   "dependencies": {
     "@ant-design/icons": "^6.3.2",
     "@maplibre/maplibre-gl-geocoder": "^1.9.4",
+    "@maptiler/sdk": "^4.1.0",
+    "@maptiler/weather": "^3.1.1",
     "@mercator-blue/sdk": "^0.5.2",
     "@tanstack/react-query": "^5.101.2",
     "@tanstack/react-query-devtools": "^5.101.4",

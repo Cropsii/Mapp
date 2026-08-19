@@ -1,11 +1,10 @@
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { Button, Card, Slider } from "antd";
-import { mapAtributes } from "../utils/mapAtributes";
+import FormItem from "antd/es/form/FormItem";
 import React, { useEffect, useState } from "react";
 import { Layer, Source } from "react-map-gl/maplibre";
-import FormItem from "antd/es/form/FormItem";
 
-export const HailsideControl = () => {
+export const EarthQuake = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [opacity, setOpacity] = useState(0);
   useEffect(() => {
@@ -16,14 +15,14 @@ export const HailsideControl = () => {
     }
   }, [opacity]);
   return (
-    <Card title="Тени для гор">
+    <Card title="Землятресения за неделю">
       <FormItem label="Прозрачность">
         <Slider
           value={opacity}
           onChange={(e) => setOpacity(e)}
           max={1}
           min={0}
-          step={0.01}
+          step={0.1}
         ></Slider>
       </FormItem>
       <Button
@@ -36,25 +35,18 @@ export const HailsideControl = () => {
         }
         type="dashed"
         block
-        onClick={() => {
-          setIsVisible((prev) => !prev);
-        }}
+        onClick={() => setIsVisible((prev) => !prev)}
       ></Button>
       <Source
-        id="terrain"
-        type="raster-dem"
-        url={`https://api.maptiler.com/tiles/terrain-rgb-v2/tiles.json?${mapAtributes.mapTiler.apiKey}`}
-        volatile
+        type="geojson"
+        data={
+          "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
+        }
       >
         {isVisible && (
           <Layer
-            type="hillshade"
-            id="hailside"
-            source="terrain"
-            paint={{
-              "hillshade-illumination-anchor": "map",
-              "hillshade-exaggeration": opacity,
-            }}
+            type="heatmap"
+            paint={{ "heatmap-radius": 5, "heatmap-opacity": opacity }}
           ></Layer>
         )}
       </Source>

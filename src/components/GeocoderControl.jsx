@@ -44,10 +44,6 @@ export const GeocoderControl = () => {
         },
         { maplibregl: mapLib, popup: true, language: "ru", limit: 10 },
       ),
-
-    {
-      position: "bottom-left",
-    },
   );
 
   return null;

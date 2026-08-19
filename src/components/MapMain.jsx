@@ -2,7 +2,9 @@ import { PopConfirmAddNode } from "./PopConfirmAddNode";
 import { mapStyles } from "../utils/mapAtributes";
 import Map from "react-map-gl/maplibre";
 import React, { useState } from "react";
+import { config } from "@maptiler/sdk";
 
+config.apiKey = import.meta.env.VITE_APP_MAPTILER_API;
 export const MapMain = ({ children, mapRef }) => {
   const [isPopOpen, setIsPopOpen] = useState(false);
   const [cord, setCord] = useState();

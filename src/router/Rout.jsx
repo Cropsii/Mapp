@@ -5,6 +5,7 @@ import LogIn from "../pages/LogIn";
 import React from "react";
 import App from "../App";
 import { GuestOnlyCheck } from "../components/GuestOnlyCheck";
+import { GlobeTest } from "../pages/GlobeTest";
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <App></App>,
+      },
+      {
+        path: "globeGL",
+        element: <GlobeTest></GlobeTest>,
       },
     ],
   },

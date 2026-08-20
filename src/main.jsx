@@ -12,23 +12,26 @@ import { StrictMode } from "react";
 import "./index.css";
 
 import "@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css";
+import { TourrefProvider } from "./context/providers/TourProvider.jsx";
 
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <MapProvider>
-      <ConfigProvider>
-        <App>
-          <QueryClientProvider client={queryClient}>
-            <ReactQueryDevtools
-              initialIsOpen={false}
-              buttonPosition="bottom-right"
-            ></ReactQueryDevtools>
-            <RouterProvider router={router}></RouterProvider>
-          </QueryClientProvider>
-        </App>
-      </ConfigProvider>
+      <TourrefProvider>
+        <ConfigProvider>
+          <App>
+            <QueryClientProvider client={queryClient}>
+              <ReactQueryDevtools
+                initialIsOpen={false}
+                buttonPosition="bottom-right"
+              ></ReactQueryDevtools>
+              <RouterProvider router={router}></RouterProvider>
+            </QueryClientProvider>
+          </App>
+        </ConfigProvider>
+      </TourrefProvider>
     </MapProvider>
   </StrictMode>,
 );

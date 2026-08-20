@@ -27,7 +27,7 @@ export const TabsComponent = () => {
       key: "3",
       label: "Mercator слои",
       icon: <GlobalOutlined></GlobalOutlined>,
-      children:<MercatorLayers></MercatorLayers>
+      children: <MercatorLayers></MercatorLayers>,
     },
   ];
   return (

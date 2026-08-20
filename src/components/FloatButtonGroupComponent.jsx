@@ -7,12 +7,10 @@ import {
   ReloadOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-import React from "react";
 
 export const FloatButtonGroupComponent = () => {
   const { logOut } = useAuth();
   const { current: mapRef } = useMap();
-
   return (
     <>
       <FloatButtonGroup
@@ -20,7 +18,9 @@ export const FloatButtonGroupComponent = () => {
         trigger="click"
         icon={<SettingOutlined></SettingOutlined>}
       >
+        {/* Сброс вида */}
         <FloatButton
+          tooltip={{ title: "Стандартный вид", placement: "left" }}
           icon={<ReloadOutlined></ReloadOutlined>}
           onClick={() =>
             mapRef.flyTo({
@@ -33,12 +33,17 @@ export const FloatButtonGroupComponent = () => {
             })
           }
         ></FloatButton>
+        {/* Выход */}
         <Popconfirm
-          title="Выйти из аккаунта"
+          placement="left"
+          title="Выйти из аккаунта?"
           onConfirm={logOut}
           cancelText="нет"
         >
-          <FloatButton icon={<LogoutOutlined></LogoutOutlined>}></FloatButton>
+          <FloatButton
+            tooltip={{ title: "Кнопка выхода", placement: "left", zIndex: 0 }}
+            icon={<LogoutOutlined></LogoutOutlined>}
+          ></FloatButton>
         </Popconfirm>
       </FloatButtonGroup>
     </>

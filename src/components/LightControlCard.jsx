@@ -43,6 +43,7 @@ export const LightControlCard = () => {
       <FormItem label="Яркость">
         <Slider
           dots
+          defaultValue={0.2}
           min={0}
           max={1}
           step={0.1}

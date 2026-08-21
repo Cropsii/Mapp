@@ -2,9 +2,8 @@ import { BorderBeam, Card, Image, Space } from "antd";
 import React, { useState } from "react";
 import { useMap } from "react-map-gl/maplibre";
 import { mapStyles } from "../utils/mapAtributes";
-import { useNasaEarthdata } from "maplibre-gl-nasa-earthdata/react";
+
 export const ChangeStyleComponent = () => {
-  const { reset } = useNasaEarthdata();
   const [selectedIndex, setSelectedIndex] = useState(() => {
     const selectedStyleIndex = localStorage.getItem("selectedIndex");
     if (selectedStyleIndex) {
@@ -16,7 +15,6 @@ export const ChangeStyleComponent = () => {
   const { mainMap: mapRef } = useMap("mainMap");
 
   const handleClick = async (item, index) => {
-    reset();
     const map = mapRef.getMap();
     await map.setStyle(item?.style);
 

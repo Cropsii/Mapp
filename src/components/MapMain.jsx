@@ -2,9 +2,7 @@ import { PopConfirmAddNode } from "./PopConfirmAddNode";
 import { mapStyles } from "../utils/mapAtributes";
 import Map from "react-map-gl/maplibre";
 import React, { useState } from "react";
-import { config } from "@maptiler/sdk";
 
-config.apiKey = import.meta.env.VITE_APP_MAPTILER_API;
 export const MapMain = ({ children, mapRef }) => {
   const [isPopOpen, setIsPopOpen] = useState(false);
   const [cord, setCord] = useState();
@@ -16,16 +14,12 @@ export const MapMain = ({ children, mapRef }) => {
       keyboard
       light={{
         anchor: "viewport",
-        intensity: 0.5,
         "position-transition": { duration: 1000 },
-        color: "#ffffff",
+        color: "#FFD38A",
       }}
       attributionControl={false}
       sky={{
-        "sky-color": "#87CEEB",
-        "atmosphere-blend": 0.3,
-        "fog-ground-blend": 0.2,
-        "sky-horizon-blend": 0.06,
+        "sky-color": "#88C6FC",
       }}
       id="mainMap"
       maxPitch={75}
@@ -33,7 +27,6 @@ export const MapMain = ({ children, mapRef }) => {
       zoomSnap={1}
       maxZoom={20}
       minZoom={0}
-      onStyleData={(e) => console.log(e)}
       doubleClickZoom={false}
       onClick={(e) => setCord(e?.lngLat)}
       onDblClick={(e) => {

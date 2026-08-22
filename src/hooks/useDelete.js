@@ -10,11 +10,13 @@ export function useDelete() {
     mutationFn: ({ collectionName, recordId }) => {
       return pb.collection(collectionName).delete(recordId);
     },
+    
     onSuccess: () => {
       message.success("Заметка успешно удалена");
       queryClient.invalidateQueries(["collection"]);
     },
     onError: (e) => console.log(e),
+    
   });
 
   const deleteData = (collectionName, recordId) => {

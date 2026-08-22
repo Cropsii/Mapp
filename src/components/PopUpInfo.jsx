@@ -3,7 +3,8 @@ import { DeleteOutlined } from "@ant-design/icons";
 import { useDelete } from "../hooks/useDelete";
 import { Popup } from "react-map-gl/maplibre";
 import { useUrl } from "../hooks/useUrl";
-import React from "react";
+import React, { useEffect } from "react";
+import useApp from "antd/es/app/useApp";
 
 export const PopUpInfo = ({
   lng = null,
@@ -13,11 +14,25 @@ export const PopUpInfo = ({
   ...props
 }) => {
   const { deleteData, query } = useDelete();
+  const { message } = useApp();
   const { data: url, isLoading } = useUrl(data, data?.file);
+  const { isPending } = query;
+
+  useEffect(() => {
+    if (isPending) {
+      message.loading({
+        content: "Удаление",
+        key: "delete",
+      });
+    } else {
+      message.destroy("delete");
+    }
+  }, [isPending, message]);
 
   if (lng == null || lat == null) {
     return null;
   }
+
   return (
     <Popup
       style={{ color: "red" }}

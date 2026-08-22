@@ -9,6 +9,6 @@ export const AdditionalMapStyles = () => {
       <LightControlCard></LightControlCard>
       <HailsideControl></HailsideControl>
       <EarthQuake></EarthQuake>
-    </Flex>
+      </Flex>
   );
 };

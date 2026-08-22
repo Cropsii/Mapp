@@ -14,9 +14,9 @@ export const ChangeStyleComponent = () => {
 
   const { mainMap: mapRef } = useMap("mainMap");
 
-  const handleClick = async (item, index) => {
+  const handleClick =  (item, index) => {
     const map = mapRef.getMap();
-    await map.setStyle(item?.style);
+    map.setStyle(item?.style);
 
     localStorage.setItem("selectedIndex", index);
 

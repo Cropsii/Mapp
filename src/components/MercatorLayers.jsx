@@ -136,6 +136,7 @@ export const MercatorLayers = () => {
       <Flex vertical gap={10}>
         <FormItem label="Данные">
           <Select
+            showSearch={{ optionFilterProp: "label" }}
             placeholder="Выберите данные"
             style={{ width: "100%" }}
             onChange={(e) => setDataSet(e)}

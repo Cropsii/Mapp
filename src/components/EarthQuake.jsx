@@ -46,7 +46,35 @@ export const EarthQuake = () => {
         {isVisible && (
           <Layer
             type="heatmap"
-            paint={{ "heatmap-radius": 5, "heatmap-opacity": opacity }}
+            paint={{
+              "heatmap-radius": 5,
+              "heatmap-opacity": opacity,
+              "heatmap-color": [
+                "interpolate",
+                ["linear"],
+                ["heatmap-density"],
+
+                0,
+                "rgba(0,0,0,0)",
+
+                0.08,
+                "#16002e",
+                0.2,
+                "#3b00ff",
+                0.35,
+                "#7a00ff",
+                0.5,
+                "#d000ff",
+                0.65,
+                "#ff0080",
+                0.8,
+                "#ff3158",
+                0.92,
+                "#ff8a00",
+                1.0,
+                "#fff200",
+              ],
+            }}
           ></Layer>
         )}
       </Source>

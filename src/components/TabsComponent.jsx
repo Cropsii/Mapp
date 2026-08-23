@@ -19,7 +19,7 @@ export const TabsComponent = () => {
     },
     {
       key: "2",
-      label: "Дополнительыне стили",
+      label: "Дополнительне стили",
       icon: <ExperimentOutlined></ExperimentOutlined>,
       children: <AdditionalMapStyles></AdditionalMapStyles>,
     },

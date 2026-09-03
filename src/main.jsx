@@ -21,10 +21,10 @@ createRoot(document.getElementById("root")).render(
       <ConfigProvider>
         <App>
           <QueryClientProvider client={queryClient}>
-            <ReactQueryDevtools
+            {/* <ReactQueryDevtools
               initialIsOpen={false}
               buttonPosition="bottom-right"
-            ></ReactQueryDevtools>
+            ></ReactQueryDevtools> */}
             <RouterProvider router={router}></RouterProvider>
           </QueryClientProvider>
         </App>

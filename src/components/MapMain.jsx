@@ -28,7 +28,10 @@ export const MapMain = ({ children, mapRef }) => {
       maxZoom={20}
       minZoom={0}
       doubleClickZoom={false}
-      onClick={(e) => setCord(e?.lngLat)}
+      onClick={(e) => {
+        setCord(e?.lngLat);
+        console.log(e?.lngLat);
+      }}
       onDblClick={(e) => {
         const eventCord = e.lngLat;
         setIsPopOpen(true);
@@ -37,7 +40,10 @@ export const MapMain = ({ children, mapRef }) => {
       projection={"globe"}
       ref={mapRef}
       style={{ height: "100dvh" }}
-      mapStyle={mapStyles[localStorage.getItem("selectedIndex") || 0]?.style}
+      // mapStyle={mapStyles[localStorage.getItem("selectedIndex") || 0]?.style}
+      mapStyle={
+        "https://api.maptiler.com/maps/01a0620c-e3b1-7d64-b992-a04cd0fb9fdc/style.json?key=GgqQJqVNCH4XkEWcVnJs"
+      }
     >
       <PopConfirmAddNode
         isPopOpen={isPopOpen}

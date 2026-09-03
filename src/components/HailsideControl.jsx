@@ -1,9 +1,9 @@
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
-import { Button, Card, Slider } from "antd";
+import { Layer, Source } from "react-map-gl/maplibre";
 import { mapAtributes } from "../utils/mapAtributes";
 import React, { useEffect, useState } from "react";
-import { Layer, Source } from "react-map-gl/maplibre";
 import FormItem from "antd/es/form/FormItem";
+import { Button, Card, Slider } from "antd";
 
 export const HailsideControl = () => {
   const [isVisible, setIsVisible] = useState(false);

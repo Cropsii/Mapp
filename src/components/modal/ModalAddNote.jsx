@@ -3,7 +3,6 @@ import { useMutateCollection } from "../../hooks/useMutateCollection";
 import { UploadOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 import { pb } from "../../utils/PB";
-import React from "react";
 
 export const ModalAddNote = ({ isAddModalOpen, setIsAddModalOpen, cord }) => {
   const { addToCollection, addToCollectionData } = useMutateCollection();

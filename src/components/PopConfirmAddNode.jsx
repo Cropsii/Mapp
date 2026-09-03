@@ -1,8 +1,8 @@
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { ModalAddNote } from "./modal/ModalAddNote";
 import { Marker } from "react-map-gl/maplibre";
-import { Popconfirm } from "antd";
 import { useRef, useState } from "react";
+import { Popconfirm } from "antd";
 
 export const PopConfirmAddNode = ({ isPopOpen, cord, setIsPopOpen }) => {
   const markerRef = useRef();

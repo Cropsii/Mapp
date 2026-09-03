@@ -2,8 +2,8 @@ import { Marker, useMap } from "react-map-gl/maplibre";
 import { useMapView } from "../hooks/useMapView";
 import { useGeoJSON } from "../hooks/useGeoJSON";
 import { ClusterPoint } from "./ClusterPoint";
-import { useMemo } from "react";
 import Supercluster from "supercluster";
+import { useMemo } from "react";
 
 const radiusPixels = 35;
 const zoomLevel = 5;

@@ -1,5 +1,5 @@
-import MaplibreGeocoder from "@maplibre/maplibre-gl-geocoder";
 import "@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css";
+import MaplibreGeocoder from "@maplibre/maplibre-gl-geocoder";
 import { useControl } from "react-map-gl/maplibre";
 import useApp from "antd/es/app/useApp";
 

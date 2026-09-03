@@ -1,7 +1,7 @@
-import { Flex } from "antd";
-import { HailsideControl } from "./HailsideControl";
 import { LightControlCard } from "./LightControlCard";
+import { HailsideControl } from "./HailsideControl";
 import { EarthQuake } from "./EarthQuake";
+import { Flex } from "antd";
 
 export const AdditionalMapStyles = () => {
   return (

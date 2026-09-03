@@ -1,7 +1,7 @@
 import { BorderBeam, Card, Image, Space } from "antd";
-import React, { useState } from "react";
-import { useMap } from "react-map-gl/maplibre";
 import { mapStyles } from "../utils/mapAtributes";
+import { useMap } from "react-map-gl/maplibre";
+import React, { useState } from "react";
 
 export const ChangeStyleComponent = () => {
   const [selectedIndex, setSelectedIndex] = useState(() => {

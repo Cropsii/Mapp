@@ -1,6 +1,5 @@
-import { Layout, Space } from "antd";
-import React from "react";
 import { useMap } from "react-map-gl/maplibre";
+import { Layout, Space } from "antd";
 
 export const LayoutSider = ({ children }) => {
   const { Sider } = Layout;
